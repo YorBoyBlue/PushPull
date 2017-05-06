@@ -5,6 +5,7 @@ using UnityEngine;
 public class Folding : MonoBehaviour {
 	[SerializeField] GameObject[] m_walls;
 	[SerializeField] Transform m_target;
+	[SerializeField] Transform m_startTarget;
 	[SerializeField] Transform m_startPosition;
 
 
@@ -20,7 +21,7 @@ public class Folding : MonoBehaviour {
 	bool m_init = false;
 	float m_moveLength;
 	float m_startTime;
-	float m_speed = 0.1f;
+	float m_speed = 1f;
 
 	public void SetBeamForce(float value) { m_beamForce = value; }
 	
@@ -32,6 +33,7 @@ public class Folding : MonoBehaviour {
 			}
 		}
 		m_target = m_walls[0].transform;
+		m_startTarget = m_startPosition;
 	}
 
 	void Update() {
@@ -40,27 +42,8 @@ public class Folding : MonoBehaviour {
 	}
 
 	void MoveAnchorPoint() {
-		for(int i = 0; i < m_maxMoveAmount; i++) {
-			if(this.transform.position == m_walls[i].transform.position || this.transform.position == m_startPosition.position) {
-				m_anchorStopped = true;
-			} else {
-				m_anchorStopped = false;
-			}
-		}
 		if(m_targeting) {
-			if(!m_init) {
-				m_startTime = Time.time;
-				m_moveLength = Vector3.Distance(this.transform.position, m_target.position);
-				m_init = true;
-			}
-			float distCovered = (Time.time - m_startTime) * m_speed;
-        	float journey = distCovered / m_moveLength;
-			//if(float.IsNaN(m_target.position.x) && float.IsNaN(m_target.position.y) && float.IsNaN(m_target.position.z)) {
-				this.transform.position = Vector3.Lerp(this.transform.position, m_target.position, journey);
-			//}
-			if(m_moveAmount == m_increment) {
-				m_init = false;
-			}
+			this.transform.position = Vector3.Lerp(this.transform.position, m_target.position, m_speed * Time.deltaTime);
 		}
 	}
 
@@ -88,42 +71,49 @@ public class Folding : MonoBehaviour {
 					switch(m_increment) {
 					case 0:
 						if(m_walls[0] != null) {
+							m_startTarget = m_startPosition;
 							m_target = m_walls[0].transform;
 						}
 						m_walls[0].SetActive(true);						
 					break;
 					case 1:
 						if(m_walls[1] != null) {
+							m_startTarget = m_walls[0].transform;
 							m_target = m_walls[1].transform;
 						}
 						m_walls[1].SetActive(true);
 					break;
 					case 2:
 						if(m_walls[2] != null) {
+							m_startTarget = m_walls[1].transform;
 							m_target = m_walls[2].transform;
 						}
 						m_walls[2].SetActive(true);
 					break;
 					case 3:
 						if(m_walls[3] != null) {
+							m_startTarget = m_walls[2].transform;
 							m_target = m_walls[3].transform;
 						}
 						m_walls[3].SetActive(true);
 					break;
 					case 4:
 						if(m_walls[4] != null) {
+							m_startTarget = m_walls[3].transform;
 							m_target = m_walls[4].transform;
 						}
 						m_walls[4].SetActive(true);
 					break;
 					case 5:
 						if(m_walls[5] != null) {
+							m_startTarget = m_walls[4].transform;
 							m_target = m_walls[5].transform;
 						}
 						m_walls[5].SetActive(true);
 					break;
 					case 6:
 						if(m_walls[6] != null) {
+							m_startTarget = m_walls[5].transform;
 							m_target = m_walls[6].transform;
 						}
 						m_walls[6].SetActive(true);
@@ -149,42 +139,49 @@ public class Folding : MonoBehaviour {
 					switch(m_increment) {
 					case 0:
 						if(m_startPosition != null) {
+							m_startTarget = m_walls[0].transform;
 							m_target = m_startPosition;
 						}
 						m_walls[0].SetActive(false);
 					break;
 					case 1:
 						if(m_walls[0] != null) {
+							m_startTarget = m_walls[1].transform;
 							m_target = m_walls[0].transform;
 						}
 						m_walls[1].SetActive(false);
 					break;
 					case 2:						
 						if(m_walls[1] != null) {
+							m_startTarget = m_walls[2].transform;
 							m_target = m_walls[1].transform;
 						}
 						m_walls[2].SetActive(false);
 					break;
 					case 3:
 						if(m_walls[2] != null) {
+							m_startTarget = m_walls[3].transform;
 							m_target = m_walls[2].transform;
 						}
 						m_walls[3].SetActive(false);
 					break;
 					case 4:
 						if(m_walls[3] != null) {
+							m_startTarget = m_walls[4].transform;
 							m_target = m_walls[3].transform;
 						}
 						m_walls[4].SetActive(false);
 					break;
 					case 5:
 						if(m_walls[4] != null) {
+							m_startTarget = m_walls[5].transform;
 							m_target = m_walls[4].transform;
 						}
 						m_walls[5].SetActive(false);
 					break;
 					case 6:
 						if(m_walls[5] != null) {
+							m_startTarget = m_walls[6].transform;
 							m_target = m_walls[5].transform;
 						}
 						m_walls[6].SetActive(false);
