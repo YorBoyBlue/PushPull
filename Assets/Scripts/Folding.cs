@@ -17,7 +17,7 @@ public class Folding : MonoBehaviour {
 	int m_maxMoveAmount;
 	float m_movementPerFrame = 0.5f;
 	int m_increment;
-	float m_beamForce;
+	public float m_beamForce;
 	bool m_init = false;
 	float m_moveLength;
 	float m_startTime;

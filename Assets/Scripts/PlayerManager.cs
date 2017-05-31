@@ -138,7 +138,7 @@ public class PlayerManager : MonoBehaviour {
 
         // Collision Check
         if(m_myhit.collider != null) {
-            if(m_myhit.collider.CompareTag("PushPull")) {
+            if(m_myhit.collider.CompareTag("PushPull")||m_myhit.collider.CompareTag("Trigger")) {
                 
                 // Push/Pull Object Functionality
                 if(m_beamPush) {

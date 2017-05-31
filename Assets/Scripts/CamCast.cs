@@ -43,6 +43,14 @@ public class CamCast : MonoBehaviour {
 					m_currentHighlight = hit.collider.gameObject;
 					hit.collider.gameObject.GetComponent<PieceStats>().highlighted = true;					
 				}
+			}
+				//for josh code
+				else if (hit.collider.tag == "Trigger"){			
+				isTargettinganchorPoint = true;
+				if(isTargettinganchorPoint){
+					m_currentHighlight = hit.collider.gameObject;
+					hit.collider.gameObject.GetComponentInParent<TriggerStats>().m_highlighted = true;					
+				}
 			} else {
 				isTargettingMoveCube = false;
 				isTargettinganchorPoint = false;
@@ -51,6 +59,7 @@ public class CamCast : MonoBehaviour {
 						m_currentHighlight.GetComponent<Folding>().m_targeting = false;
 					}
 					m_currentHighlight.GetComponent<PieceStats>().highlighted = false;
+					m_currentHighlight.GetComponentInParent<TriggerStats>().m_highlighted = false;
 					m_currentHighlight = null;
 				}
 			}	
