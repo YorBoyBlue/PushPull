@@ -9,12 +9,17 @@ public class WallMover : MonoBehaviour {
 	public GameObject m_trigger;
 	public GameObject m_target;
 	public List<GameObject> m_targetPieces;
-	private float m_zPos;
+	public int m_range;
+	public float m_yPos;
+	public bool m_canMove;
+	
 	// Use this for initialization
 	void Start () {
-		
+		// things player needs to access
 		m_triggerActive = false;
 		m_moveForce = 1;
+		m_range = 4;
+		m_canMove = true;
 		
 		m_targetPieces = new List<GameObject>();
 		
@@ -26,7 +31,7 @@ public class WallMover : MonoBehaviour {
         	}
 		}
 		SetDirection();
-		m_zPos = m_target.transform.position.z;
+		m_yPos = m_target.transform.position.y;
 		
 	}
 	
@@ -35,32 +40,28 @@ public class WallMover : MonoBehaviour {
 		MoveWall(m_moveForce);
 	}
 	void MoveWall(int force){
-		if(m_triggerActive) {
-			m_target.transform.Translate(force *(Vector3.forward * Time.deltaTime));
-			CheckPosition();
+		if(m_canMove){
+			if(m_triggerActive) {
+				m_target.transform.Translate(force *(Vector3.forward * Time.deltaTime));
+				CheckPosition();
+				if(m_target.transform.position.y >= (m_yPos + m_range)) {
+					m_canMove = false;
+				}
+			}
 		}
 	}
 
 	void CheckPosition() {
-		if(m_target.transform.rotation.x < 180.0f && m_target.transform.rotation.x < 0){
-			for(int i = 0; i < m_targetPieces.Count; i++){
-				if(m_targetPieces[i].transform.position.z > (m_zPos + 1.0f)){
-					m_targetPieces[i].SetActive(true);
-				}
-				if(m_targetPieces[i].transform.position.z < m_zPos) {
-					m_targetPieces[i].SetActive(false);
-				}
+		
+		for(int i = 0; i < m_targetPieces.Count; i++){
+			if(m_targetPieces[i].transform.position.y > (m_yPos + 1.0f)){
+				m_targetPieces[i].SetActive(true);
 			}
-		} else {
-			for(int i = 0; i < m_targetPieces.Count; i++){
-				if(m_targetPieces[i].transform.position.z < (m_zPos + 1.0f)){
-					m_targetPieces[i].SetActive(true);
-				}
-				if(m_targetPieces[i].transform.position.z > m_zPos) {
-					m_targetPieces[i].SetActive(false);
-				}
+			if(m_targetPieces[i].transform.position.y < m_yPos) {
+				m_targetPieces[i].SetActive(false);
 			}
 		}
+		
 	}
 
 	void SetDirection() {
