@@ -81,7 +81,7 @@ public class PlayerManager : MonoBehaviour {
     }
     
     void OnCollisionEnter(Collision other) {
-        if (other.collider.tag == "Ground" || other.collider.tag == "PushPull" || other.collider.tag == "Foldable") {
+        if (other.collider.tag == "Ground" || other.collider.tag == "PushPull" || other.collider.tag == "Foldable" || other.collider.tag == "Trigger") {
             m_grounded = true;
         }
     }
