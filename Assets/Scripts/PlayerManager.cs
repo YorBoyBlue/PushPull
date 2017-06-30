@@ -138,7 +138,7 @@ public class PlayerManager : MonoBehaviour {
 
         // Collision Check
         if(m_myhit.collider != null) {
-            if(m_myhit.collider.CompareTag("PushPull")||m_myhit.collider.CompareTag("Trigger")) {
+            if(m_myhit.collider.CompareTag("PushPull")) {
                 
                 // Push/Pull Object Functionality
                 if(m_beamPush) {
@@ -159,6 +159,21 @@ public class PlayerManager : MonoBehaviour {
                 //     m_myhit.rigidbody.AddForceAtPosition(myRay.direction * 700, m_myhit.point);
                 // }
             } 
+            if(m_myhit.collider.CompareTag("Trigger")) {
+
+                m_anchorPoint = m_myhit.transform.gameObject;
+
+                // Push/Pull Object Functionality
+                if(m_beamPush) {
+                    m_beamForce = 1f;
+                } else {
+                    m_beamForce = -1f;
+                }
+
+                WallMover wallMover = m_anchorPoint.GetComponentInParent<WallMover>();
+                wallMover.m_moveForce = m_beamForce;
+                wallMover.m_triggerActive = true;
+            }
             if(m_myhit.collider.CompareTag("Foldable")) {
 
                 m_anchorPoint = m_myhit.transform.gameObject;
@@ -174,6 +189,8 @@ public class PlayerManager : MonoBehaviour {
             }         
         } 
     }
+
+    // Player movement
 
     void Move(Vector3 velocity) {
         m_velocity = velocity;
