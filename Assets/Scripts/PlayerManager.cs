@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class PlayerManager : MonoBehaviour {
 
+    public Transform m_respawnPosition;
+    [SerializeField] LevelManager m_levelManager;
     [SerializeField] FXManager m_fxManager;
     [SerializeField] Rigidbody m_rigidbody;
     public bool m_grounded = false;
@@ -36,6 +38,7 @@ public class PlayerManager : MonoBehaviour {
     public bool m_inputAllowed;
 
     public float GetRange(){ return m_range; }
+    public LevelManager GetLevelManager() { return m_levelManager; }
 	
     void Start() {
         m_inputAllowed = true;

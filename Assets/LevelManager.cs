@@ -5,6 +5,7 @@ using UnityEngine;
 public class LevelManager : MonoBehaviour {
 	
 	[SerializeField] GameObject m_player;
+	[SerializeField] PlayerManager m_playerManager;
 	bool m_levelBeaten;
 	[SerializeField] GameObject[] m_levelPrefabs;
 	[SerializeField] Transform m_levelPoolTransform;
@@ -18,6 +19,8 @@ public class LevelManager : MonoBehaviour {
 		m_currentLevelPrefab.SetActive(true);
 		m_player.transform.position = m_currentLevelPrefab.GetComponent<Level>().GetStartPosition().position;
 		m_player.transform.rotation = m_currentLevelPrefab.GetComponent<Level>().GetStartPosition().rotation;
+		m_playerManager.m_respawnPosition.position = m_player.transform.position;
+		m_playerManager.m_respawnPosition.rotation = m_player.transform.rotation;
 	}
 
 	public void ChangeLevel(int nextLevel) {
@@ -32,6 +35,14 @@ public class LevelManager : MonoBehaviour {
 		m_player.transform.position = m_currentLevelPrefab.GetComponent<Level>().GetStartPosition().position;
 		m_player.transform.rotation = m_currentLevelPrefab.GetComponent<Level>().GetStartPosition().rotation;
 	}
+
+	public void PlayerDied(int currentLevel) {
+		m_currentLevelPrefab.SetActive(false);
+		m_currentLevelPrefab.SetActive(true);
+		m_player.transform.position = m_playerManager.m_respawnPosition.position;
+		m_player.transform.rotation = m_playerManager.m_respawnPosition.rotation;
+	}
+
 
 
 

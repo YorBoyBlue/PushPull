@@ -5,7 +5,6 @@ using UnityEngine;
 public class GameManager : MonoBehaviour {
 
 	static GameManager Instance = null;
-
 	public int m_currentLevel = 1;
 	public int m_maxBeatenLevel = 1;
 	int m_levels = 4;

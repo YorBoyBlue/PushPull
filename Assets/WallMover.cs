@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class WallMover : MonoBehaviour {
+	Vector3 m_originalTargetLocalPosition;
 	public int m_direction;
 	public float m_moveForce;
 	public bool m_triggerActive;
@@ -16,6 +17,7 @@ public class WallMover : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		// things player needs to access
+		m_originalTargetLocalPosition = m_target.transform.localPosition;
 		m_range = 4;
 		
 		m_targetPieces = new List<GameObject>();
@@ -32,7 +34,8 @@ public class WallMover : MonoBehaviour {
 
 	void OnEnable() {
 		m_triggerActive = false;
-		m_yPos = m_target.transform.position.y;	
+		m_target.transform.localPosition = m_originalTargetLocalPosition;
+		m_yPos = m_target.transform.position.y;
 	}
 	
 	// Update is called once per frame
