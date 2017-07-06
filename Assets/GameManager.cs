@@ -13,7 +13,7 @@ public class GameManager : MonoBehaviour {
 		m_player = GameObject.FindGameObjectWithTag("Player");
 		m_start = GameObject.FindGameObjectWithTag("Entrance");
 		m_exit = GameObject.FindGameObjectWithTag("Exit");
-		m_player.transform.position = m_start.transform.position;
+		m_player.transform.position = m_start.GetComponent<StartPosition>().m_startPoint.position;
 		m_levelBeaten = false;
 	}
 	
