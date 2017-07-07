@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour {
 
+<<<<<<< HEAD
 	public GameObject m_player;
 	public GameObject m_start;
 	public GameObject m_exit;
@@ -21,16 +22,51 @@ public class GameManager : MonoBehaviour {
 	void Update () {
 		
 	}
+=======
+	static GameManager Instance = null;
+	public int m_currentLevel = 1;
+	public int m_maxBeatenLevel = 1;
+	int m_levels = 4;
+	int[] m_levelsBeaten;
 
-	void MakeWall(Vector3 startPos, int xSize, int ySize, int dir, bool isVert, int range ){
-		for(int i = 0; i < xSize; i++) {
-			for(int j = 0; j < ySize; j++) {
-				MakeWallPiece();
+	public static GameManager GetInstance() { return Instance; }
+	public int[] GetLevelsBeaten() { return m_levelsBeaten; }
+>>>>>>> origin/Josh
+
+	void Awake() {
+		m_levelsBeaten = new int[m_levels];
+		for(int i = 0; i < m_levels; i++) {
+			if(PlayerPrefs.HasKey("Level" + (i + 1).ToString() + "Beaten")) {
+				m_levelsBeaten[i] = PlayerPrefs.GetInt("Level" + (i + 1).ToString() + "Beaten");
+			} else {
+				m_levelsBeaten[i] = 0;
 			}
+		}
+		if(PlayerPrefs.HasKey("maxBeatenLevel")) {
+			int maxBeatenLevel = PlayerPrefs.GetInt("maxBeatenLevel");
+			m_maxBeatenLevel = maxBeatenLevel;
+		}
+		DontDestroyOnLoad(this);		
+		if (Instance == null) {
+			Instance = this;
+		} else if (Instance != this) {
+			Destroy(gameObject);
 		}
 	}
 
-	void MakeWallPiece() {
-		
+	public void SetLevel1() {
+		m_currentLevel = 1;
+	}
+
+	public void SetLevel2() {
+		m_currentLevel = 2;		
+	}
+
+	public void SetLevel3() {
+		m_currentLevel = 3;		
+	}
+
+	public void SetLevel4() {
+		m_currentLevel = 4;		
 	}
 }

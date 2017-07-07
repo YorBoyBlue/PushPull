@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Level : MonoBehaviour {
+public class CreateLevel : MonoBehaviour {
      
     public Transform cube;
     public int gridWidth;

@@ -21,7 +21,7 @@ public class CamCast : MonoBehaviour {
 		Target();
 	}
 
-	void Target(){
+	void Target() {
 		//Debug.DrawRay(transform.position, transform.forward * 10, Color.cyan);
 		Vector3 spawnPosition = new Vector3();
         Vector3 direction = new Vector3();
@@ -31,38 +31,38 @@ public class CamCast : MonoBehaviour {
         Physics.Raycast(myRay, out hit, m_range);
 
 		if(hit.collider != null) {
-			if (hit.collider.tag == "PushPull"){ 				
+			if(hit.collider.tag == "PushPull") { 				
 				isTargettingMoveCube = true;
-				if(isTargettingMoveCube){
+				if(isTargettingMoveCube) {
 					m_currentHighlight = hit.collider.gameObject;
 					hit.collider.gameObject.GetComponent<PieceStats>().highlighted = true;					
 				}
-			} else if (hit.collider.tag == "Foldable"){			
+			} else if(hit.collider.tag == "Foldable") {			
 				isTargettinganchorPoint = true;
-				if(isTargettinganchorPoint){
+				if(isTargettinganchorPoint) {
 					m_currentHighlight = hit.collider.gameObject;
 					hit.collider.gameObject.GetComponent<PieceStats>().highlighted = true;					
 				}
-			}
-				//for josh code
-				else if (hit.collider.tag == "Trigger"){			
+			} else if(hit.collider.tag == "Trigger") {			
 				isTargettinganchorPoint = true;
-				if(isTargettinganchorPoint){
+				if(isTargettinganchorPoint) {
 					m_currentHighlight = hit.collider.gameObject;
-					hit.collider.gameObject.GetComponentInParent<TriggerStats>().m_highlighted = true;					
+					hit.collider.gameObject.GetComponent<PieceStats>().highlighted = true;					
+				}
+			} else if(hit.collider.tag == "Foldable") {		
+				isTargettinganchorPoint = true;
+				if(m_currentHighlight.CompareTag("Foldable")) {
+					m_currentHighlight = hit.collider.gameObject;
+					m_currentHighlight.GetComponent<Folding>().m_targeting = false;
 				}
 			} else {
+				if(m_currentHighlight != null) {
+					m_currentHighlight.GetComponent<PieceStats>().highlighted = false;
+				}
 				isTargettingMoveCube = false;
 				isTargettinganchorPoint = false;
-				if(m_currentHighlight != null) {
-					if(m_currentHighlight.CompareTag("Foldable")) {
-						m_currentHighlight.GetComponent<Folding>().m_targeting = false;
-					}
-					m_currentHighlight.GetComponent<PieceStats>().highlighted = false;
-					m_currentHighlight.GetComponentInParent<TriggerStats>().m_highlighted = false;
-					m_currentHighlight = null;
-				}
-			}	
+				m_currentHighlight = null;				
+			}
 		}	
 	}
 }

@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class PlayerManager : MonoBehaviour {
 
+    public Transform m_respawnPosition;
+    [SerializeField] LevelManager m_levelManager;
     [SerializeField] FXManager m_fxManager;
     [SerializeField] Rigidbody m_rigidbody;
     public bool m_grounded = false;
@@ -36,6 +38,7 @@ public class PlayerManager : MonoBehaviour {
     public bool m_inputAllowed;
 
     public float GetRange(){ return m_range; }
+    public LevelManager GetLevelManager() { return m_levelManager; }
 	
     void Start() {
         m_inputAllowed = true;
@@ -81,7 +84,7 @@ public class PlayerManager : MonoBehaviour {
     }
     
     void OnCollisionEnter(Collision other) {
-        if (other.collider.tag == "Ground" || other.collider.tag == "PushPull" || other.collider.tag == "Foldable") {
+        if (other.collider.tag == "Ground" || other.collider.tag == "PushPull" || other.collider.tag == "Foldable" || other.collider.tag == "Trigger") {
             m_grounded = true;
         }
     }
@@ -138,7 +141,7 @@ public class PlayerManager : MonoBehaviour {
 
         // Collision Check
         if(m_myhit.collider != null) {
-            if(m_myhit.collider.CompareTag("PushPull")||m_myhit.collider.CompareTag("Trigger")) {
+            if(m_myhit.collider.CompareTag("PushPull")) {
                 
                 // Push/Pull Object Functionality
                 if(m_beamPush) {
@@ -159,6 +162,21 @@ public class PlayerManager : MonoBehaviour {
                 //     m_myhit.rigidbody.AddForceAtPosition(myRay.direction * 700, m_myhit.point);
                 // }
             } 
+            if(m_myhit.collider.CompareTag("Trigger")) {
+
+                m_anchorPoint = m_myhit.transform.gameObject;
+
+                // Push/Pull Object Functionality
+                if(m_beamPush) {
+                    m_beamForce = 1f;
+                } else {
+                    m_beamForce = -1f;
+                }
+
+                WallMover wallMover = m_anchorPoint.GetComponentInParent<WallMover>();
+                wallMover.m_moveForce = m_beamForce;
+                wallMover.m_triggerActive = true;
+            }
             if(m_myhit.collider.CompareTag("Foldable")) {
 
                 m_anchorPoint = m_myhit.transform.gameObject;
@@ -174,6 +192,8 @@ public class PlayerManager : MonoBehaviour {
             }         
         } 
     }
+
+    // Player movement
 
     void Move(Vector3 velocity) {
         m_velocity = velocity;
