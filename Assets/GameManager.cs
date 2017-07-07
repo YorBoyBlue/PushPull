@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour {
 
-<<<<<<< HEAD
 	public GameObject m_player;
 	public GameObject m_start;
 	public GameObject m_exit;
@@ -22,7 +21,6 @@ public class GameManager : MonoBehaviour {
 	void Update () {
 		
 	}
-=======
 	static GameManager Instance = null;
 	public int m_currentLevel = 1;
 	public int m_maxBeatenLevel = 1;
@@ -31,7 +29,6 @@ public class GameManager : MonoBehaviour {
 
 	public static GameManager GetInstance() { return Instance; }
 	public int[] GetLevelsBeaten() { return m_levelsBeaten; }
->>>>>>> origin/Josh
 
 	void Awake() {
 		m_levelsBeaten = new int[m_levels];
